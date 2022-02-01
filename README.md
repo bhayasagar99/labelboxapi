@@ -1,5 +1,8 @@
 # labelboxapi
 Speak-Labelbox-API-project
+
+![labelboxAPI_Restful_Architecture (1)](https://user-images.githubusercontent.com/95505215/151923033-296edf79-7246-4051-8a26-0a210d3d4104.png)
+
 Below mentioned are all the end points:
 
 post/users --> Create Users
