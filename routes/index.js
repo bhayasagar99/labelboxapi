@@ -64,7 +64,7 @@ router.post('/saverating', async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/updaterating', async (req, res) => {
   try {
-
+    
     let doc = await Rating.findOneAndUpdate({ email: req.body.email, title: req.body.title }, { rating: req.body.rating }, { new: true });
     res.json(doc);
   }
@@ -77,6 +77,7 @@ router.post('/updaterating', async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/deleterating', async (req, res) => {
   try {
+    //test comment
     let doc = await Rating.findOneAndUpdate({ email: req.body.email, title: req.body.title }, { active: "N" }, { new: true });
     res.json({ "message": "User rating Deleted" });
   }
