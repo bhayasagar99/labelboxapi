@@ -40,10 +40,10 @@ router.get('/apod/pictures', async function (req, res, next) {
 //Save User Rating//
 /////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/saverating', async (req, res) => {
-  let titleFound = await pictures.findOne({ title: req.body.title,active : "Y" });
-  let emailFound = await user.findOne({ email: req.body.email,active : "Y" });
+  let titleFound = await pictures.findOne({ title: req.body.title });
+  let emailFound = await user.findOne({ email: req.body.email });
 
-  console.log(titleFound, emailFound);
+
   //If title and email exists then only we save the rating
   if (titleFound && emailFound && emailFound.active == 'Y') {
     const rating = new Rating({
@@ -64,8 +64,8 @@ router.post('/saverating', async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/updaterating', async (req, res) => {
   try {
-    
-    let doc = await Rating.findOneAndUpdate({ email: req.body.email, title: req.body.title }, { rating: req.body.rating }, { new: true });
+    //only update if that rating exists, and is active(not deleted)
+    let doc = await Rating.findOneAndUpdate({ email: req.body.email, title: req.body.title,active : "Y" }, { rating: req.body.rating }, { new: true });
     res.json(doc);
   }
   catch (err) {
@@ -77,8 +77,8 @@ router.post('/updaterating', async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/deleterating', async (req, res) => {
   try {
-    //test comment
-    let doc = await Rating.findOneAndUpdate({ email: req.body.email, title: req.body.title }, { active: "N" }, { new: true });
+    //delete rating if that rating exits, and has not been deleted previously
+    let doc = await Rating.findOneAndUpdate({ email: req.body.email, title: req.body.title,active : "Y" }, { active: "N" }, { new: true });
     res.json({ "message": "User rating Deleted" });
   }
   catch (err) {
@@ -91,7 +91,7 @@ router.post('/deleterating', async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/userratings', async (req, res) => {
   try {
-    let doc = await Rating.find({ email: req.body.email });
+    let doc = await Rating.find({ email: req.body.email,active :"Y" });
     res.json(doc);
   }
   catch (err) {

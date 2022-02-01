@@ -2,13 +2,10 @@ var express = require('express');
 const { ReadConcernLevel } = require('mongodb');
 var router = express.Router();
 const mongoose = require('mongoose');
+//dotenv is used to secure the db connection and demo key from the API
 require('dotenv/config');
 const User = require('../models/user');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //Creating Users//
